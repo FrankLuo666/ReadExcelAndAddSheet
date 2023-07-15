@@ -30,7 +30,7 @@ import java.io.FileOutputStream;
 public class ReadExcelAndAddSheet {
     public static void main(String[] args) {
         ReadExcelAndAddSheet app = new ReadExcelAndAddSheet();
-        String filePath = "/app/ReadExcelAndAddSheet/src/main/java/com/tool/testExcel.xlsx";
+        String filePath = "/app/data/testExcel.xlsx";
         app.readExcelAndAddSheet(filePath);
     }
 

@@ -32,4 +32,4 @@ WORKDIR /app/ReadExcelAndAddSheet
 RUN mvn clean install
 
 # 定义容器启动命令
-CMD ["bin", "bash"]
+CMD ["/bin/bash"]
