@@ -11,3 +11,22 @@
  2	002	private	メソード２	function2
  3	003	private	メソード３	function3
 
+
+#### 使用Dockerfile建立docker镜像
+```shell
+docker build -f ./Dockerfile -t ubuntu_jdk17_maven:1 .
+```
+#### 查看生成的镜像
+```shell
+docker images
+```
+
+#### 启动镜像
+```shell
+docker run -it --name=ReadExcelAndAddSheet ubuntu_jdk17_maven:1 bash
+```
+
+#### 在容器中启动项目
+```shell
+sh run.sh
+```
