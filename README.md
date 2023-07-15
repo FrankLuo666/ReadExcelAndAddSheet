@@ -35,7 +35,7 @@ sh run.sh
 
 <br/><br/>
 
-#### 如果需要主机和容器共享文件夹
+### 如果需要主机和容器共享文件夹
 ```shell
 # 创建镜像：docker build -t <镜像名称> <Dockerfile路径>
 docker build -t ubuntu_jdk17_maven:1 .
@@ -56,3 +56,29 @@ docker run -it -v /Users/luo/dockerShared:/app/data ubuntu_jdk17_maven:1 /bin/ba
 
 
 这两个命令结合使用，首先构建镜像，然后运行该镜像的容器，并通过挂载目录实现宿主机和容器之间的数据共享。
+
+
+### 提交镜像
+1. 使用docker login命令登录到远程仓库。例如，如果您使用的是 Docker Hub，可以运行以下命令登录：
+```shell
+docker login
+```
+您将被要求输入您的用户名和密码。
+
+2. 标记您的本地镜像，以指定远程仓库的名称和标签。使用docker tag命令，将镜像重新命名为远程仓库的名称。例如，如果您的本地镜像名称是 my-image，远程仓库是 Docker Hub，您可以运行以下命令：
+```shell
+# docker tag <本地镜像>:<标签> <仓库用户名>/<仓库名称>:<标签>
+docker tag ubuntu_jdk17_maven:1 frankluo666/ubuntu_jdk17_maven:1
+```
+请将 <仓库用户名> 替换为您的 Docker Hub 用户名，<仓库名称> 替换为您的仓库名称，<标签> 替换为您想要的标签。
+
+3. 使用docker push命令将标记的镜像推送到远程仓库。例如，如果您的镜像标签是 latest，您可以运行以下命令：
+```shell
+# docker push <仓库名称>:<标签>
+docker push ubuntu_jdk17_maven:1
+```
+这将上传您的镜像到远程仓库。
+
+完成上述步骤后，您的镜像将被推送到远程仓库，并可在其他地方访问和使用。请确保已正确替换命令中的占位符，并根据您使用的远程仓库服务进行相应的登录和配置。
+
+
