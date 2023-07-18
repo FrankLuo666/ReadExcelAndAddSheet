@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
  从excel中读取数据并增加sheet,填入读取的数据:
 
  最开始，删除出了sheet1和sheet2之外的所有sheet。
- 从第1个sheet的第23行开始，取出这一行几个字段第值。
+ 从第1个sheet的第33行开始，取出这一行几个字段第值。
  每取得1行，就新建一个sheet，以sheet2为模板，将从sheet1取得的值，插入到新sheet的指定cell中。
  最后删除模板sheet2。
 
@@ -51,15 +51,22 @@ public class ReadExcelAndAddSheet {
             // 获取第一个Sheet
             Sheet sheet = workbook.getSheetAt(0);
 
-            // 从第23行开始读取每一行的前5个字段
-            int startRow = 22; // 第23行对应索引为22
-            int endRow = sheet.getLastRowNum();
+            // 从第33行开始读取每一行的前5个字段
+            int startRow = 33;
+            // 获取实际显示的最后一行的行索引，然后转换为实际显示的行数
+            int endRow = Math.min(sheet.getLastRowNum() + 1, 66);
 
             // 从第2个Sheet开始创建新的Sheet
-            for (int i = 1; i <= endRow - startRow + 1; i++) {
-                Row row = sheet.getRow(startRow + i - 1);
+            for (int i = startRow; i <= endRow; i++) {
+                Row row = sheet.getRow(i - 1);
                 if (row == null) {
-                    break; // 如果第一个字段为空，中断循环
+                    break; // 如果行为空，中断循环
+                }
+
+                // 在获取 firstCell 之前，再次检查 row 是否为 null
+                Cell firstCell = row.getCell(0);
+                if (firstCell == null || firstCell.getCellType() == CellType.BLANK) {
+                    break; // 如果该行的第一个格子没有值，中断循环
                 }
 
                 String functionNameLogical = getCellValueAsString(row.getCell(3));
@@ -83,10 +90,10 @@ public class ReadExcelAndAddSheet {
                 Cell functionNamePhysicalCell = row7.createCell(12);
 
                 // 取得sheet1的值
-                Cell functionIdCellSheet1 = sheet.getRow(startRow + i - 1).getCell(1);
-                Cell modifierCellSheet1 = sheet.getRow(startRow + i - 1).getCell(2);
-                Cell functionNameLogicalCellSheet1 = sheet.getRow(startRow + i - 1).getCell(3);
-                Cell functionNamePhysicalCellSheet1 = sheet.getRow(startRow + i - 1).getCell(4);
+                Cell functionIdCellSheet1 = sheet.getRow(startRow - 1).getCell(1);
+                Cell modifierCellSheet1 = sheet.getRow(startRow - 1).getCell(2);
+                Cell functionNameLogicalCellSheet1 = sheet.getRow(startRow - 1).getCell(3);
+                Cell functionNamePhysicalCellSheet1 = sheet.getRow(startRow - 1).getCell(4);
 
                 // 将sheet1的值设置到新sheet中
                 modifierCell.setCellValue(getCellValueAsString(modifierCellSheet1));
